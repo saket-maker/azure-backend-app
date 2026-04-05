@@ -10,7 +10,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 4000;
 
 app.get("/", (req, res) => {
-  res.send("Backend is running 🚀🚀");
+  res.json({ message: "Backend is running 🚀" });
 });
 
 app.get("/api/users", (req, res) => {
