@@ -4,7 +4,12 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      "https://my-react-app-cdbte4emf8hfeaaw.centralindia-01.azurewebsites.net/",
+  }),
+);
 app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
