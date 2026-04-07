@@ -15,12 +15,13 @@ async function getSecret() {
   try {
     const secret = await client.getSecret("DB-PASSWORD");
     console.log("Secret from Key Vault:", secret.value);
+    return secret.value;
   } catch (err) {
     console.error("Key Vault auth error:", err);
   }
 }
 
-getSecret();
+// getSecret();
 
 const app = express();
 
@@ -34,8 +35,9 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 
-app.get("/", (req, res) => {
-  res.json({ message: "Backend is running 🚀" });
+app.get("/", async (req, res) => {
+  const secret = await getSecret();
+  res.json({ message: "Backend is running 🚀..", secret });
 });
 
 app.get("/api/users", (req, res) => {
