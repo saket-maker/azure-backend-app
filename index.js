@@ -2,6 +2,26 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
+import { DefaultAzureCredential } from "@azure/identity";
+import { SecretClient } from "@azure/keyvault-secrets";
+
+const keyVaultName = "my-keyvault-saket";
+const url = `https://${keyVaultName}.vault.azure.net`;
+
+const credential = new DefaultAzureCredential();
+const client = new SecretClient(url, credential);
+
+async function getSecret() {
+  try {
+    const secret = await client.getSecret("DB-PASSWORD");
+    console.log("Secret from Key Vault:", secret.value);
+  } catch (err) {
+    console.error("Key Vault auth error:", err);
+  }
+}
+
+getSecret();
+
 const app = express();
 
 app.use(
